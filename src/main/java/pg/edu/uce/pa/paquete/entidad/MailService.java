@@ -1,4 +1,8 @@
 package pg.edu.uce.pa.paquete.entidad;
+
+import jakarta.inject.Singleton;
+
+@Singleton 
 public class MailService {
 
   public void enviar(String correo, String asunto, String cuerpo){

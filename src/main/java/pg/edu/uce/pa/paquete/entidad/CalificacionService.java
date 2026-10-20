@@ -1,6 +1,13 @@
 package pg.edu.uce.pa.paquete.entidad;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped 
 public class CalificacionService {
+
+    @Inject 
+    private MailService mailService;
 
     public void calificar(Calificacion c){
 
@@ -13,14 +20,14 @@ public class CalificacionService {
 
         System.out.println("Enviando correo...");
 
- MailService mailService = new MailService();
+
 
         String asunto = "Confirmación de calificación";
         String cuerpo = "Estudiante: " + c.getNombreEstudiante() + ", se ha realizado la calificación de " + c.getEvaluacion() +
         ", NOTA: " + c.getNota();
 
         mailService.enviar(c.getCorreoEstudiante(), asunto, cuerpo);
-        mailService = null;
+    
 
     }
 
