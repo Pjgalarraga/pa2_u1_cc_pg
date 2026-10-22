@@ -47,7 +47,7 @@ public class Pedido {
         this.producto = producto;
         this.correo = correo;
         this.total = total;
-    }
+    }                                                                                                                                                                                         
 
 
 }
