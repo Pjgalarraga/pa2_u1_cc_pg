@@ -5,6 +5,15 @@ public class Pedido {
     private String producto;
     private String correo;
     private double total;
+    private String telefono;
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
     public String getCliente() {
         return cliente;
@@ -42,11 +51,12 @@ public class Pedido {
         
     }
 
-    public Pedido(String cliente, String producto, String correo, double total) {
+    public Pedido(String cliente, String producto, String correo, double total, String telefono) {
         this.cliente = cliente;
         this.producto = producto;
         this.correo = correo;
         this.total = total;
+        this.telefono = telefono;
     }                                                                                                                                                                                         
 
 

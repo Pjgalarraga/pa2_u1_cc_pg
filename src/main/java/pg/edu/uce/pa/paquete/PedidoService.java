@@ -4,44 +4,24 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import pg.edu.uce.pa.MailService;
+import pg.edu.uce.pa.Notificacion;
 import pg.edu.uce.pa.Pedido;
+import pg.edu.uce.pa.SMSService;
 
 @ApplicationScoped // Delego el control al contenedor ArC
 // @RequestScoped //Aplicaciones web
 // @Singleton //funcionalidad que no es lógica del negocio
 public class PedidoService {
-/* */
-    // inyección de dependencias mediante atributo
-    
-    /*   @Inject
-      private MailService mailService;
-     */
-
-    // inyección de dependencias mediante constructor
-   /*private MailService mailService;
-
-    @Inject
-    public PedidoService(MailService mailService) {
-        this.mailService = mailService;
-
-    }*/
-
-
-/* 
-
-    // inyección de dependencias mediante método
-    private MailService mailService;
+    @Inject 
+    @Named("mail")
+    private MailService notificacionCorreo;
 
     @Inject 
-    public void setMailService(MailService mailService) {
-    System.out.println("Se está inyectando el servicio de correo electrónico en PedidoService");
-    this.mailService = mailService;
-
-
-}
-
+    @Named ("sms")
+    private SMSService notificacionSMS;
 
     public void realizar(Pedido pedido) {
 
@@ -54,42 +34,15 @@ public class PedidoService {
 
         System.out.println("Pedido realizado con éxito.");
 
-        String asunto = "Confirmación de pedido";
         String cuerpo = "Estimado " + pedido.getCliente() + ", su pedido de " + pedido.getProducto() +
                 " por un total de $" + pedido.getTotal() + " ha sido realizado con éxito";
 
-        this.mailService.enviar(pedido.getCorreo(), asunto, cuerpo);
+        // Notificación del pedido por correo
+        this.notificacionCorreo.enviar(pedido.getCorreo(), cuerpo);
 
-    }*/
-        //Inyección manual por lookup
-
-    
-
-         public void realizar(Pedido pedido) {
-    
-            MailService mailService = CDI.current()
-                                         .select(MailService.class)
-                                         .get();
-
-
-
-
-        System.out.println("realizando pedido...");
-
-        System.out.println("Pedido realizado para el cliente: " + pedido.getCliente());
-        System.out.println("Producto: " + pedido.getProducto());
-        System.out.println("Total: " + pedido.getTotal());
-        System.out.println("Correo: " + pedido.getCorreo());
-
-        System.out.println("Pedido realizado con éxito.");
-
-        String asunto = "Confirmación de pedido";
-        String cuerpo = "Estimado " + pedido.getCliente() + ", su pedido de " + pedido.getProducto() +
-                " por un total de $" + pedido.getTotal() + " ha sido realizado con éxito";
-
-        mailService.enviar(pedido.getCorreo(), asunto, cuerpo);
+        // Notificación del pedido por SMS
+        this.notificacionSMS.enviar(pedido.getTelefono(), cuerpo);
 
     }
-
 
 }
