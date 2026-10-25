@@ -1,16 +1,17 @@
-package pg.edu.uce.pa;
+package pg.edu.uce.pa.paquete;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
 import jakarta.inject.Inject;
-import pg.edu.uce.pa.paquete.PedidoService;
 
 @QuarkusMain 
 public class Main implements QuarkusApplication{
 
-   @Inject 
-    private PedidoService pedidoService;
+    @Inject 
+    VentaService ventaService;
+
+   
 
     public static void main(String[] args) {
         
@@ -25,10 +26,14 @@ public class Main implements QuarkusApplication{
     public int run(String... args)  {
          System.out.println("Iniciando aplicación Quarkus");
 
-           //Creamos manualmente el objeto de la clase pedido
-        Pedido pedido = new Pedido("Juan Pérez", "Laptop", "juan.perez@example.com", 1500.00, "0991677893");
+         ventaService.procesarVenta("regular", 100);
+         ventaService.procesarVenta("vip", 200);
+         ventaService.procesarVenta("regular", 300);
+         ventaService.procesarVenta("vip", 500);
+
+
+
         
-        pedidoService.realizar(pedido);
      
 
       
