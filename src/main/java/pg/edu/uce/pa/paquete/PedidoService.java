@@ -10,20 +10,15 @@ import pg.edu.uce.pa.MailService;
 import pg.edu.uce.pa.Notificacion;
 import pg.edu.uce.pa.Pedido;
 import pg.edu.uce.pa.SMSService;
+import pg.edu.uce.pa.Interceptors.Auditoria;
 
 @ApplicationScoped // Delego el control al contenedor ArC
 // @RequestScoped //Aplicaciones web
 // @Singleton //funcionalidad que no es lógica del negocio
 public class PedidoService {
-    @Inject 
-    @Named("mail")
-    private MailService notificacionCorreo;
 
-    @Inject 
-    @Named ("sms")
-    private SMSService notificacionSMS;
-
-    public void realizar(Pedido pedido) {
+    @Auditoria 
+    public String realizar(Pedido pedido, String valor) {
 
         System.out.println("realizando pedido...");
 
@@ -37,13 +32,8 @@ public class PedidoService {
         String cuerpo = "Estimado " + pedido.getCliente() + ", su pedido de " + pedido.getProducto() +
                 " por un total de $" + pedido.getTotal() + " ha sido realizado con éxito";
 
-        // Notificación del pedido por correo
-        this.notificacionCorreo.enviar(pedido.getCorreo(), cuerpo);
-        this.notificacionCorreo.setCantidad(this.notificacionCorreo.getCantidad()+1);
-        System.out.println("Cantidad de correos enviados pedido: " + this.notificacionCorreo.getCantidad());
-        this.notificacionCorreo.setNombre("Correo de Pedido");
-        // Notificación del pedido por SMS
-        this.notificacionSMS.enviar(pedido.getTelefono(), cuerpo);
+                return "Pedido realizado con éxito";
+    
 
     }
 

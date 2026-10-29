@@ -23,4 +23,14 @@ public class SMSService implements Notificacion {
     public void setCantidad(Integer cantidad) {
          }
 
+    @Override
+    public String getNombre() {
+     
+    return null;
+    }
+
+    @Override
+    public void setNombre(String nombre) {
+    }
+
 }
