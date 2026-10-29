@@ -27,7 +27,7 @@ public class Main implements QuarkusApplication{
          System.out.println("Iniciando aplicación Quarkus");
 
          ventaService.procesarVenta("regular", 100);
-         ventaService.procesarVenta("vip", 200);
+         ventaService.procesarVenta("vip", -300.70);
          ventaService.procesarVenta("regular", 300);
          ventaService.procesarVenta("vip", 500);
 
