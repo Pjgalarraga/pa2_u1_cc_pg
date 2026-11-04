@@ -1,5 +1,8 @@
 package pg.edu.uce.pa.paquete;
 
+import java.sql.Time;
+import java.time.LocalDateTime;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.spi.CDI;
@@ -17,9 +20,16 @@ import pg.edu.uce.pa.Interceptors.Auditoria;
 // @Singleton //funcionalidad que no es lógica del negocio
 public class PedidoService {
 
-    @Auditoria 
+    @Auditoria
     public String realizar(Pedido pedido, String valor) {
 
+        Long init = System.currentTimeMillis();
+        try {
+            Thread.sleep(1500);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
         System.out.println("realizando pedido...");
 
         System.out.println("Pedido realizado para el cliente: " + pedido.getCliente());
@@ -29,11 +39,9 @@ public class PedidoService {
 
         System.out.println("Pedido realizado con éxito.");
 
-        String cuerpo = "Estimado " + pedido.getCliente() + ", su pedido de " + pedido.getProducto() +
-                " por un total de $" + pedido.getTotal() + " ha sido realizado con éxito";
+        Long fin = System.currentTimeMillis()-init;
 
-                return "Pedido realizado con éxito";
-    
+        return "Pedido realizado con éxito" + " tiempo de ejecucion= " + fin;
 
     }
 
