@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pg.edu.uce.pa.DescuentoRegular;
+import pg.edu.uce.pa.paquete.Inteceptor.MedirTiempo;
 import pg.edu.uce.pa.paquete.Inteceptor.ValidarMonto;
 
 @ApplicationScoped 
@@ -24,6 +25,7 @@ public class VentaService {
     Auditoria auditoria;
 
     @ValidarMonto 
+    @MedirTiempo 
     public void procesarVenta(String tipo, double monto) {
         double descuento;
         if (tipo.equalsIgnoreCase("VIP")) {

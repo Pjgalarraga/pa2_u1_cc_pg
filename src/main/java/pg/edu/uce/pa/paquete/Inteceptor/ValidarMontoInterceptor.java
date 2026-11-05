@@ -2,24 +2,18 @@ package pg.edu.uce.pa.paquete.Inteceptor;
 
 import java.lang.reflect.Parameter;
 
+import jakarta.annotation.Priority;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
 
 @ValidarMonto
 @Interceptor
+@Priority ((Interceptor.Priority.APPLICATION+0))
 public class ValidarMontoInterceptor {
 
     @AroundInvoke
     public Object validarYRegistrar(InvocationContext context) throws Exception {
-      /* String nombreMetodo = context.getMethod().getName();
-        System.out.println("[ValidarMonto]: se está ejecutando el método: " + nombreMetodo);*/  
-
-         /* Parameter[] parametros = context.getMethod().getParameters();
-            for (Parameter parameter : parametros) {
-            System.out.println("Parámetro: " + parameter.getName());
-
-        }*/
 
         Object[] valores = context.getParameters();
 
