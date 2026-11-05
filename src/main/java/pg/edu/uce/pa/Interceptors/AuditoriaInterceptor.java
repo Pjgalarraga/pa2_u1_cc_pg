@@ -2,6 +2,7 @@ package pg.edu.uce.pa.Interceptors;
 
 import java.lang.reflect.Parameter;
 
+import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
@@ -11,6 +12,7 @@ import pg.edu.uce.pa.Pedido;
 
 @Auditoria
 @Interceptor
+@Priority ((Interceptor.Priority.APPLICATION+2))
 public class AuditoriaInterceptor {
 
     @Inject
@@ -27,7 +29,7 @@ public class AuditoriaInterceptor {
 
 
         String nombreMetodo = context.getMethod().getName();
-        System.out.println("Auditoria: se está ejecutando el método: " + nombreMetodo);
+        System.out.println("[Auditoria Interceptor] Auditoria: se está ejecutando el método: " + nombreMetodo);
         System.out.println("Ejecuto todo lo que quiero que haga el interceptor");
 
         Parameter[] parametros = context.getMethod().getParameters();
@@ -47,7 +49,7 @@ public class AuditoriaInterceptor {
 
         this.auditoriaService.guardarEnLaBase(cliente, total, correo);
 
-        System.out.println("Mensaje luego de que se ejecuta el método interceptado");
+        System.out.println("[Auditoria Interceptor] Mensaje luego de que se ejecuta el método interceptado");
 
         return resultado;
 

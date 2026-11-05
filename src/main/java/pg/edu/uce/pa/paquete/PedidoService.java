@@ -14,16 +14,22 @@ import pg.edu.uce.pa.Notificacion;
 import pg.edu.uce.pa.Pedido;
 import pg.edu.uce.pa.SMSService;
 import pg.edu.uce.pa.Interceptors.Auditoria;
+import pg.edu.uce.pa.Interceptors.Mail;
+import pg.edu.uce.pa.Interceptors.MedirTiempo;
+import pg.edu.uce.pa.Interceptors.SMS;
 
 @ApplicationScoped // Delego el control al contenedor ArC
 // @RequestScoped //Aplicaciones web
 // @Singleton //funcionalidad que no es lógica del negocio
 public class PedidoService {
-
+    @MedirTiempo 
     @Auditoria
+    @SMS 
+    @Mail 
+   
     public String realizar(Pedido pedido, String valor) {
 
-        Long init = System.currentTimeMillis();
+       
         try {
             Thread.sleep(1500);
         } catch (Exception e) {
@@ -39,9 +45,9 @@ public class PedidoService {
 
         System.out.println("Pedido realizado con éxito.");
 
-        Long fin = System.currentTimeMillis()-init;
+        
 
-        return "Pedido realizado con éxito" + " tiempo de ejecucion= " + fin;
+        return "Pedido realizado con éxito";
 
     }
 
