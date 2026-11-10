@@ -3,15 +3,12 @@ package pg.edu.uce.pa;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import pg.edu.uce.pa.extensiones.NotificacionExtension;
 
 @ApplicationScoped 
 public class CompraService {
-
-    @Inject 
-    @Named ("mail")
-    private Notificacion notificacionCorreo;
-
-    public void realizar(Compra compra) {
+//mediante constructor, parámetro en el método, componente externo se manda la implementación
+    public void realizar(Compra compra, NotificacionExtension notificacionExtension) {
 
         System.out.println("realizando compra...");
 
@@ -22,16 +19,14 @@ public class CompraService {
 
         System.out.println("Compra realizado con éxito.");
 
-        String cuerpo = "Estimado " + compra.getCliente() + ", su compra de " + compra.getProducto() +
-                " por un total de $" + compra.getTotal() + " ha sido realizado con éxito";
+        //aquí programo el envío de la notificación
 
-        // Notificación del pedido por correo
-        this.notificacionCorreo.enviar(compra.getCorreo(), cuerpo);
-        this.notificacionCorreo.setCantidad(this.notificacionCorreo.getCantidad()+1);
-        System.out.println("Cantidad de correos enviados compra: " + this.notificacionCorreo.getCantidad());
-        System.out.println("Nombre:" + this.notificacionCorreo.getNombre());
-     
-    
+        notificacionExtension.enviar("Su pedido ha sido realizado con éxito",
+         compra.getCliente());
+
+         
+
+
       
     }
 
